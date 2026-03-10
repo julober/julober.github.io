@@ -73,11 +73,11 @@ if (hamburger && navLinksContainer) {
  * Renders project cards from the `projects` array (defined in data.js)
  * into the element with id="projects-grid".
  *
- * Each card shows:
- *  - An optional image (or a placeholder if none provided)
- *  - Title, description
- *  - Tech-stack tag pills
- *  - An optional "Explore" link
+ * Each card is a full-bleed banner with:
+ *  - A background image (or bannerGradient when no image is provided)
+ *  - A dark linear-gradient overlay for text legibility
+ *  - Tech-stack tag pills, title, description
+ *  - An optional "Explore" link (whole card is the link when project.link is set)
  */
 function renderProjects() {
   const grid = document.getElementById("projects-grid");
@@ -90,15 +90,11 @@ function renderProjects() {
 
   grid.innerHTML = projects
     .map((project) => {
-      const imageHTML = project.image
-        ? `<img src="${project.image}" alt="${escapeHtml(project.title)}" class="card-img" loading="lazy">`
-        : `<div class="card-img card-img-placeholder" aria-hidden="true">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-               <rect x="8" y="16" width="48" height="32" rx="3"/>
-               <circle cx="22" cy="28" r="4"/>
-               <polyline points="8,40 20,28 30,36 42,24 56,36"/>
-             </svg>
-           </div>`;
+      // Background: real image takes priority, otherwise use the gradient.
+      // sanitizeUrl ensures only safe http/https/relative URLs reach the DOM.
+      const bgStyle = project.image
+        ? `background-image: url("${sanitizeUrl(project.image)}")`
+        : `background: ${project.bannerGradient || "linear-gradient(135deg, #0a2d52, #1a5a9a)"}`;
 
       const tagsHTML = Array.isArray(project.tags)
         ? project.tags
@@ -106,26 +102,33 @@ function renderProjects() {
             .join("")
         : "";
 
-      const linkHTML =
-        project.link
-          ? `<a href="${project.link}" target="_blank" rel="noopener noreferrer" class="card-link">
-               ${escapeHtml(project.linkLabel || "Explore")}
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true">
-                 <path d="M3 8h10M9 4l4 4-4 4"/>
-               </svg>
-             </a>`
-          : "";
+      const linkAttr = project.link
+        ? `href="${sanitizeUrl(project.link)}" target="_blank" rel="noopener noreferrer"`
+        : "";
+
+      const exploreLinkHTML = project.link
+        ? `<span class="card-link" aria-hidden="true">
+             ${escapeHtml(project.linkLabel || "Explore")}
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+               <path d="M3 8h10M9 4l4 4-4 4"/>
+             </svg>
+           </span>`
+        : "";
+
+      // Whole card becomes an <a> when a link is set
+      const tagName = project.link ? "a" : "article";
+      const tagAttrs = project.link ? linkAttr : "";
 
       return `
-        <article class="project-card">
-          ${imageHTML}
-          <div class="card-body">
+        <${tagName} class="project-card" ${tagAttrs}>
+          <div class="card-bg" style="${bgStyle}"></div>
+          <div class="card-content">
+            <div class="card-tags">${tagsHTML}</div>
             <h3 class="card-title">${escapeHtml(project.title)}</h3>
             <p class="card-desc">${escapeHtml(project.description)}</p>
-            <div class="card-tags">${tagsHTML}</div>
-            ${linkHTML}
+            ${exploreLinkHTML}
           </div>
-        </article>`;
+        </${tagName}>`;
     })
     .join("");
 }
@@ -139,6 +142,17 @@ function escapeHtml(str) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+/**
+ * Sanitizes a URL to prevent CSS/JS injection via data.js image or link fields.
+ * Only allows http, https, and relative paths (no javascript: or data: URIs).
+ */
+function sanitizeUrl(url) {
+  if (typeof url !== "string") return "";
+  const trimmed = url.trim();
+  if (/^javascript:/i.test(trimmed) || /^data:/i.test(trimmed)) return "";
+  return escapeHtml(trimmed);
 }
 
 /* ── Boot ────────────────────────────────────────────────── */
