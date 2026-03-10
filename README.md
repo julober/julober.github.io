@@ -1,107 +1,56 @@
-# julober.github.io 
+# julober.github.io
 
-Personal portfolio website for **Julia Lober** — Cryospheric Scientist, Scientific Programmer, and Open Science Advocate.
+## Project Overview
 
-**Live site:** [julober.github.io](https://julober.github.io)
+This repository contains Julia Lober’s personal portfolio site, built as a static, data-driven website using **Vanilla HTML, CSS, and JavaScript**. The design combines a clean “tech docs” style with full-width project banner cards rendered dynamically from a single data source.
 
----
+## Workflow & Architecture
 
-## File structure
-
-```
+```text
 julober.github.io/
-├── index.html      ← Main page (all sections)
-├── style.css       ← Alpine/Cryosphere-palette styling
-├── script.js       ← Dynamic rendering & nav interactions
-├── data.js         ← ✏️  Edit this file to add/update projects
-├── IMG_0241.jpg    ← Hero image (aerial wing over ice)
+├── index.html              # Page structure and content sections
+├── style.css               # Visual design and responsive layout
+├── script.js               # UI behavior + project card rendering
+├── data.js                 # Dynamic project data source
+├── images/                 # Root image asset directory (project banners/placeholders)
+│   ├── placeholder1.jpg
+│   ├── placeholder2.jpg
+│   └── placeholder3.jpg
 └── README.md
 ```
 
----
+### Dynamic project flow
 
-## ✏️  How to add a new project
+1. Project entries live in `data.js` as objects in the `projects` array.
+2. Each object includes fields like `title`, `description`, `image`, `tags`, and `link`.
+3. `script.js` reads that array on page load and injects full-width project cards into `#projects-grid`.
+4. Image paths should target files in the root `images/` directory (for example: `images/placeholder1.jpg`).
 
-All project cards are driven by the `projects` array in **`data.js`**.  
-Open that file and copy-paste an existing object, then fill in your values:
+## Deployment & CI/CD
 
-```js
-{
-  id: 4,                            // increment from the last entry
-  title: "My New Project",
-  description: "A short description of what you did and why it matters.",
-  image: "images/my-project.jpg",   // relative path, or "" for placeholder
-  tags: ["Python", "AWS", "QGIS"],  // tech stack tags shown as pills
-  link: "https://github.com/julober/my-project",  // "" if no link yet
-  linkLabel: "Explore"              // text on the button
-}
-```
+This repository is connected to **Netlify**:
 
-Save the file. The JavaScript in `script.js` automatically reads the array and
-renders all cards into the grid on page load—no HTML changes needed.
+- Netlify automatically creates **live preview builds for every Pull Request**.
+- Netlify also handles the **final production deployment** when changes are merged.
 
----
+## How to Update Content
 
-## 🖼️  How to add a project image
+### Add a new photo to `images/`
 
-1. Drop your image into the repository root (or an `images/` sub-folder).
-2. Set the `image` field in `data.js` to the relative path, e.g. `"images/my-project.jpg"`.
-3. A descriptive `alt` text is generated automatically from the project title.
+1. Place your image file in `/images` (example: `images/my-new-banner.jpg`).
+2. Use a clear file name so future updates are easy to track.
 
-If `image` is left as `""`, a clean placeholder graphic is shown instead.
+### Add a new project banner in `data.js`
 
----
+1. Open `data.js`.
+2. Copy an existing project object in the `projects` array.
+3. Update the fields (`id`, `title`, `description`, `tags`, `link`, etc.).
+4. Set `image` to the new image path in `/images` (example: `image: "images/my-new-banner.jpg"`).
+5. Save and refresh the site to confirm the new card appears.
 
-## 🚀  Deploying to GitHub Pages
+### Update the `/now` callout text
 
-This site is a **static site** (pure HTML/CSS/JS), so GitHub Pages serves it
-with zero build steps.
-
-### First-time setup
-
-1. Push this repository to GitHub as `<your-username>.github.io`.
-2. Go to **Settings → Pages** in your repository.
-3. Under **Source**, select:
-   - Branch: `main` (or `master`)
-   - Folder: `/ (root)`
-4. Click **Save**.  
-   GitHub will build and publish the site within ~60 seconds.  
-   Your site will be live at `https://<your-username>.github.io`.
-
-### Updating the site
-
-```bash
-# 1. Make your changes (e.g. add a project to data.js)
-# 2. Commit and push
-git add .
-git commit -m "Add new project: My New Project"
-git push origin main
-```
-
-GitHub Pages redeploys automatically on every push to `main`.
-
----
-
-## 🎨  Design notes
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-accent` | `#3a7fc1` | Links, buttons, highlights |
-| `--color-accent-dark` | `#24568a` | Hover states |
-| `--color-bg` | `#f5f8fb` | Page background |
-| `--color-text` | `#1e2d3d` | Body text |
-
-Fonts are loaded from Google Fonts: **Inter** (body) and **JetBrains Mono** (code/labels).
-
----
-
-## Local development
-
-No build tools required. Just open `index.html` in a browser, or run a tiny
-local server to avoid any `file://` quirks:
-
-```bash
-# Python 3
-python -m http.server 8080
-# then open http://localhost:8080
-```
+1. Open `index.html`.
+2. Find the `<section id="now">` block and edit the text inside `.now-card`.
+3. Update the date line (`.now-date`) so the timestamp matches the latest update.
+4. Save and refresh to verify the callout content.

@@ -19,7 +19,7 @@
   --color-tag-text:    #24568a;
 
   /* Typography */
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
 
   /* Spacing / radii */
@@ -47,7 +47,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
+  background-color: #ffffff;
   color: var(--color-text);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -297,9 +297,9 @@ section:nth-child(even) {
 }
 
 #projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 /* Banner-style project card */
@@ -307,6 +307,7 @@ section:nth-child(even) {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-md);
+  width: 100%;
   min-height: 300px;
   display: flex;
   flex-direction: column;
@@ -323,6 +324,11 @@ section:nth-child(even) {
 .project-card:hover,
 .project-card:visited,
 .project-card:focus {
+  text-decoration: none !important;
+}
+
+.project-card *,
+.project-card:hover * {
   text-decoration: none !important;
 }
 
@@ -350,7 +356,7 @@ section:nth-child(even) {
 }
 
 .project-card:hover .card-bg {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 /* Text content layer */
@@ -391,6 +397,11 @@ section:nth-child(even) {
   margin-bottom: 0.5rem;
   line-height: 1.3;
   text-decoration: none !important;
+  transition: color var(--transition);
+}
+
+.project-card:hover .card-title {
+  color: #f0f6ff;
 }
 
 .card-desc {
