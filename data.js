@@ -13,7 +13,7 @@ const projects = [
     title: "Data Management at NSIDC",
     description:
       "Supported AWS cloud storage migration for NASA's cryosphere data archive. Produced metadata for 35+ SnowEx datasets and authored Python automation scripts to streamline ingest workflows.",
-    image: "",
+    image: "IMG_2627.jpeg",
     bannerGradient: "linear-gradient(135deg, #0a2d52 0%, #1a5a9a 60%, #2176c2 100%)",
     tags: ["Python", "AWS", "Metadata", "SnowEx", "NASA"],
     link: "",
