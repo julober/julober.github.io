@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Julia Lober – Cryospheric Scientist, Scientific Programmer, and Open Science Advocate. Geophysics MSc student at Boise State University." />
+  <meta name="author" content="Julia Lober" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Julia Lober | Cryospheric Scientist" />
+  <meta property="og:description" content="Geophysics MSc student at Boise State University studying cryospheric sciences and open science." />
+  <meta property="og:type" content="website" />
+
+  <title>Julia Lober | Cryospheric Scientist</title>
+
+  <!-- Google Fonts (Inter + JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════════════ -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand">JL<span>.</span></a>
+
+      <!-- Mobile hamburger -->
+      <button
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#now">/now</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#uses">/uses</a></li>
+        <li><a href="#experience">Experience</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════════════════
+         HERO / INTRODUCTION
+    ══════════════════════════════════════════════════════ -->
+    <section id="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero-inner">
+
+          <div class="hero-text">
+            <h1 id="hero-heading">Julia Lober</h1>
+            <p class="hero-subtitle">
+              Cryospheric Scientist&nbsp;&bull;&nbsp;Scientific Programmer&nbsp;&bull;&nbsp;Open Science Advocate
+            </p>
+            <p class="hero-bio">
+              I&rsquo;m a Geophysics MSc student at <strong>Boise State University</strong>, where I study snow and ice to understand our rapidly changing cryosphere. My work sits at the intersection of field science, remote sensing, and open data—I believe that transparent, reproducible science is the foundation of addressing climate change.
+            </p>
+            <div class="hero-cta-group">
+              <a href="#projects" class="btn btn-primary">View My Work</a>
+              <a href="#experience" class="btn btn-outline">Experience &amp; Outreach</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         /NOW
+    ══════════════════════════════════════════════════════ -->
+    <section id="now" aria-labelledby="now-heading">
+      <div class="container">
+        <span class="section-eyebrow">What I&rsquo;m up to</span>
+        <h2 class="section-title" id="now-heading">/now</h2>
+        <p class="section-subtitle">A snapshot of what&rsquo;s occupying my mind and my calendar right now.</p>
+
+        <div class="now-card">
+          <p class="now-date">Updated March 2025</p>
+          <p>
+            Currently analyzing snow and ice data for my Master&rsquo;s thesis at Boise State and exploring 
+            <strong>UAVSAR processing workflows</strong> to characterize snowpack dynamics in alpine environments.
+          </p>
+          <p>
+            Deepening my Python and open-source geospatial toolkit, and collaborating with the broader 
+            cryosphere community to make NASA data more accessible for researchers worldwide.
+          </p>
+          <p>
+            Outside the lab: skiing every slope I can find, playing ultimate frisbee, and occasionally 
+            throwing clay on a pottery wheel.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         PROJECTS & OPEN SCIENCE
+    ══════════════════════════════════════════════════════ -->
+    <section id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <span class="section-eyebrow">Open Science &amp; Code</span>
+        <h2 class="section-title" id="projects-heading">Projects</h2>
+        <p class="section-subtitle">
+          A selection of research, data engineering, and open-science work. Cards are generated 
+          dynamically from <code>data.js</code>—adding a new project is a one-line edit.
+        </p>
+
+        <!-- JS renders cards here -->
+        <div id="projects-grid" aria-label="Project cards" role="list"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         /USES  –  Hardware & Software Stack
+    ══════════════════════════════════════════════════════ -->
+    <section id="uses" aria-labelledby="uses-heading">
+      <div class="container">
+        <span class="section-eyebrow">Tools of the trade</span>
+        <h2 class="section-title" id="uses-heading">/uses</h2>
+        <p class="section-subtitle">The hardware, software, and real-life gear that powers my work (and play).</p>
+
+        <div class="uses-grid">
+
+          <div class="uses-card">
+            <h3>Compute &amp; Data</h3>
+            <ul class="uses-list" role="list">
+              <li>Python</li>
+              <li>R</li>
+              <li>PostgreSQL</li>
+              <li>AWS</li>
+              <li>Git</li>
+              <li>Linux</li>
+              <li>Machine Learning</li>
+            </ul>
+          </div>
+
+          <div class="uses-card">
+            <h3>Geospatial</h3>
+            <ul class="uses-list" role="list">
+              <li>QGIS</li>
+              <li>ArcGIS</li>
+              <li>GDAL</li>
+              <li>GeoPandas</li>
+              <li>UAVSAR</li>
+              <li>Remote Sensing</li>
+            </ul>
+          </div>
+
+          <div class="uses-card">
+            <h3>Field &amp; Life</h3>
+            <ul class="uses-list" role="list">
+              <li>Skiing</li>
+              <li>Ultimate Frisbee</li>
+              <li>EMT-B Gear</li>
+              <li>Ceramics</li>
+              <li>Naturalist Guiding</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         EXPERIENCE & OUTREACH
+    ══════════════════════════════════════════════════════ -->
+    <section id="experience" aria-labelledby="experience-heading">
+      <div class="container">
+        <span class="section-eyebrow">Background</span>
+        <h2 class="section-title" id="experience-heading">Experience &amp; Outreach</h2>
+        <p class="section-subtitle">Education, fieldwork, and sharing science with the public.</p>
+
+        <div class="exp-grid">
+
+          <!-- Education -->
+          <div class="exp-group">
+            <h3>Education</h3>
+            <div class="exp-items">
+
+              <div class="exp-item">
+                <p class="exp-title">MSc Geophysics</p>
+                <p class="exp-meta">Boise State University &mdash; Expected 2025</p>
+                <p class="exp-desc">
+                  Focus on cryospheric sciences, snow hydrology, and SAR remote sensing. 
+                  Thesis work on UAVSAR-derived snowpack characterization.
+                </p>
+              </div>
+
+              <div class="exp-item">
+                <p class="exp-title">Non-degree &mdash; Snow Hydrology</p>
+                <p class="exp-meta">University of Colorado Boulder &mdash; 2024</p>
+                <p class="exp-desc">
+                  Coursework in snow processes, alpine hydrology, and cryosphere modeling.
+                </p>
+              </div>
+
+              <div class="exp-item">
+                <p class="exp-title">BSc Environmental Geology</p>
+                <p class="exp-meta">Tufts University &mdash; 2022</p>
+                <p class="exp-desc">
+                  Foundation in Earth systems science, geomorphology, and environmental data analysis.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Fieldwork -->
+          <div class="exp-group">
+            <h3>Fieldwork</h3>
+            <div class="exp-items">
+
+              <div class="exp-item">
+                <p class="exp-title">Naturalist Guide</p>
+                <p class="exp-meta">Denali National Park, Alaska</p>
+                <p class="exp-desc">
+                  Led interpretive programs on subarctic tundra ecology, wildlife, and glacial landscapes for 
+                  visitors of all backgrounds. Bridged scientific knowledge and accessible storytelling 
+                  in one of Earth&rsquo;s most dynamic wilderness areas.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Outreach -->
+          <div class="exp-group">
+            <h3>Public Outreach</h3>
+            <div class="exp-items">
+
+              <div class="exp-item">
+                <p class="exp-title">Speaker &mdash; Seattle Aquarium</p>
+                <p class="exp-meta">"From Outer Space to the Microscope"</p>
+                <p class="exp-desc">
+                  Public talk connecting satellite remote sensing of the ocean to microscale 
+                  phytoplankton ecology, demonstrating how data at wildly different scales tells 
+                  one coherent story about ocean health.
+                </p>
+              </div>
+
+              <div class="exp-item">
+                <p class="exp-title">Youth Climate Delegate</p>
+                <p class="exp-meta">UN COP 25 Climate Change Conference &mdash; Madrid</p>
+                <p class="exp-desc">
+                  Participated as a youth delegate at the United Nations COP 25 climate 
+                  negotiations, representing the next generation of climate scientists 
+                  in international policy discussions.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Built with&nbsp;&#10052;&nbsp;and open science in mind &mdash; 
+          <a href="https://github.com/julober/julober.github.io" target="_blank" rel="noopener noreferrer">
+            View source on GitHub
+          </a>
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/julober" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:julialober@u.boisestate.edu">Email</a>
+        </div>
+        <p>&copy; <span id="footer-year"></span> Julia Lober</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- data must load before script so the `projects` array is defined -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById("footer-year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
