@@ -5,6 +5,12 @@
 // ============================================================
 
 export const portfolioData = {
+  // ── Edit shared UI defaults here ──────────────────────────
+  ui: {
+    // [EDIT ME] Fallback project card background if an image path is empty
+    projectCardFallbackBackground: `linear-gradient(135deg, #0a2d52, #1a5a9a)`
+  },
+
   // ── Edit profile content here ─────────────────────────────
   profile: {
     // [EDIT ME] Name shown in hero heading and document metadata

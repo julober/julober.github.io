@@ -17,7 +17,11 @@ function renderProfile() {
     </div>
   `;
 
-  document.title = `${escapeHtml(profile.name || "Portfolio")} | Cryospheric Scientist`;
+  const profileName = profile.name || "Portfolio";
+  const profileTitle = profile.title || "";
+  document.title = profileTitle
+    ? `${profileName} | ${profileTitle}`
+    : profileName;
 
   const metaAuthor = document.querySelector('meta[name="author"]');
   if (metaAuthor && profile.name) {
@@ -48,7 +52,8 @@ function renderProjectsHeader() {
     <h2 class="section-title" id="projects-heading">Projects</h2>
     <p class="section-subtitle">
       A selection of research, data engineering, and open-science work. Cards are generated
-      dynamically from <code>data.js</code>—adding a new project is a one-line edit.
+      dynamically from <code>data.js</code>—add a project object to <code>portfolioData.projects</code> with
+      <code>title</code>, <code>description</code>, <code>image</code>, and <code>link</code>.
     </p>
   `;
 }
@@ -77,17 +82,20 @@ function renderProjects() {
 
   grid.innerHTML = projects
     .map((project) => {
+      const fallbackBackground = portfolioData?.ui?.projectCardFallbackBackground
+        || "linear-gradient(135deg, #0a2d52, #1a5a9a)";
       const bgStyle = project.image
         ? `background-image: url("${sanitizeUrl(project.image)}")`
-        : `background: linear-gradient(135deg, #0a2d52, #1a5a9a)`;
+        : `background: ${escapeHtml(fallbackBackground)}`;
 
       const safeLink = sanitizeUrl(project.link || "");
+      const hasUsableLink = safeLink && safeLink !== "#";
       const isExternalLink = /^https?:\/\//i.test(safeLink);
-      const linkAttr = safeLink
+      const linkAttr = hasUsableLink
         ? `href="${safeLink}"${isExternalLink ? ' target="_blank" rel="noopener noreferrer"' : ""}`
         : "";
 
-      const exploreLinkHTML = safeLink
+      const exploreLinkHTML = hasUsableLink
         ? `<span class="card-link" aria-hidden="true">
              ${escapeHtml(project.linkLabel || "Explore")}
              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
@@ -97,8 +105,8 @@ function renderProjects() {
         : "";
 
       // Whole card becomes an <a> when a link is set
-      const tagName = safeLink ? "a" : "article";
-      const tagAttrs = safeLink ? linkAttr : "";
+      const tagName = hasUsableLink ? "a" : "article";
+      const tagAttrs = hasUsableLink ? linkAttr : "";
 
       return `
         <${tagName} class="project-card" ${tagAttrs}>
