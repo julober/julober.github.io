@@ -60,16 +60,7 @@
     ══════════════════════════════════════════════════════ -->
     <section id="hero" aria-labelledby="hero-heading">
       <div class="container">
-        <div class="hero-inner">
-
-          <div class="hero-text">
-            <h1 id="hero-heading">Julia Lober</h1>
-            <p class="hero-subtitle">
-              Cryospheric Scientist&nbsp;&bull;&nbsp;Scientific Programmer&nbsp;&bull;&nbsp;Open Science Advocate
-            </p>
-          </div>
-
-        </div>
+        <div id="profile-content" class="hero-inner"></div>
       </div>
     </section>
 
@@ -78,25 +69,7 @@
     ══════════════════════════════════════════════════════ -->
     <section id="now" aria-labelledby="now-heading">
       <div class="container">
-        <span class="section-eyebrow">What I&rsquo;m up to</span>
-        <h2 class="section-title" id="now-heading">/now</h2>
-        <p class="section-subtitle">A snapshot of what&rsquo;s occupying my mind and my calendar right now.</p>
-
-        <div class="now-card">
-          <p class="now-date">Updated March 2025</p>
-          <p>
-            Currently analyzing snow and ice data for my Master&rsquo;s thesis at Boise State and exploring 
-            <strong>UAVSAR processing workflows</strong> to characterize snowpack dynamics in alpine environments.
-          </p>
-          <p>
-            Deepening my Python and open-source geospatial toolkit, and collaborating with the broader 
-            cryosphere community to make NASA data more accessible for researchers worldwide.
-          </p>
-          <p>
-            Outside the lab: skiing every slope I can find, playing ultimate frisbee, and occasionally 
-            throwing clay on a pottery wheel.
-          </p>
-        </div>
+        <div id="now-content"></div>
       </div>
     </section>
 
@@ -105,14 +78,7 @@
     ══════════════════════════════════════════════════════ -->
     <section id="projects" aria-labelledby="projects-heading">
       <div class="container">
-        <span class="section-eyebrow">Open Science &amp; Code</span>
-        <h2 class="section-title" id="projects-heading">Projects</h2>
-        <p class="section-subtitle">
-          A selection of research, data engineering, and open-science work. Cards are generated 
-          dynamically from <code>data.js</code>—adding a new project is a one-line edit.
-        </p>
-
-        <!-- JS renders cards here -->
+        <div id="projects-header"></div>
         <div id="projects-grid" aria-label="Project cards" role="list"></div>
       </div>
     </section>
@@ -284,9 +250,7 @@
     </div>
   </footer>
 
-  <!-- data must load before script so the `projects` array is defined -->
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
   <script>
     document.getElementById("footer-year").textContent = new Date().getFullYear();
   </script>

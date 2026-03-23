@@ -2,69 +2,55 @@
 //  script.js  –  Portfolio interactivity & dynamic rendering
 // ============================================================
 
-/* ── Smooth-scroll for anchor nav links ─────────────────── */
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    const targetId = this.getAttribute("href");
-    const target = document.querySelector(targetId);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
-});
+import { portfolioData } from "./data.js";
 
-/* ── Active nav highlight on scroll ─────────────────────── */
-const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
+function renderProfile() {
+  const profileRoot = document.getElementById("profile-content");
+  if (!profileRoot) return;
 
-function highlightNav() {
-  let scrollY = window.scrollY;
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 80;
-    const sectionHeight = section.offsetHeight;
-    const sectionId = section.getAttribute("id");
-    const matchingLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
-    if (matchingLink) {
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        navLinks.forEach((l) => l.classList.remove("active"));
-        matchingLink.classList.add("active");
-      }
-    }
-  });
+  const profile = portfolioData?.profile || {};
+  profileRoot.innerHTML = `
+    <div class="hero-text">
+      <h1 id="hero-heading">${escapeHtml(profile.name || "")}</h1>
+      <p class="hero-subtitle">${escapeHtml(profile.title || "")}</p>
+      <p class="hero-bio">${escapeHtml(profile.about || "")}</p>
+    </div>
+  `;
+
+  document.title = `${escapeHtml(profile.name || "Portfolio")} | Cryospheric Scientist`;
+
+  const metaAuthor = document.querySelector('meta[name="author"]');
+  if (metaAuthor && profile.name) {
+    metaAuthor.setAttribute("content", profile.name);
+  }
 }
 
-window.addEventListener("scroll", highlightNav, { passive: true });
-highlightNav();
+function renderNow() {
+  const nowRoot = document.getElementById("now-content");
+  if (!nowRoot) return;
 
-/* ── Mobile hamburger menu ───────────────────────────────── */
-const hamburger = document.querySelector(".hamburger");
-const navLinksContainer = document.querySelector(".nav-links");
+  nowRoot.innerHTML = `
+    <span class="section-eyebrow">What I&rsquo;m up to</span>
+    <h2 class="section-title" id="now-heading">/now</h2>
+    <p class="section-subtitle">A snapshot of what&rsquo;s occupying my mind and my calendar right now.</p>
+    <div class="now-card">
+      <p class="now-date">Updated March 2026</p>
+      <p>${escapeHtml(portfolioData?.now?.text || "")}</p>
+    </div>
+  `;
+}
 
-if (hamburger && navLinksContainer) {
-  hamburger.addEventListener("click", () => {
-    const isOpen = navLinksContainer.classList.toggle("open");
-    hamburger.setAttribute("aria-expanded", isOpen);
-    hamburger.querySelector("span:nth-child(1)").style.transform = isOpen
-      ? "translateY(8px) rotate(45deg)"
-      : "";
-    hamburger.querySelector("span:nth-child(2)").style.opacity = isOpen ? "0" : "1";
-    hamburger.querySelector("span:nth-child(3)").style.transform = isOpen
-      ? "translateY(-8px) rotate(-45deg)"
-      : "";
-  });
-
-  // Close menu when a link is clicked
-  navLinksContainer.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinksContainer.classList.remove("open");
-      hamburger.setAttribute("aria-expanded", "false");
-      hamburger.querySelectorAll("span").forEach((s) => {
-        s.style.transform = "";
-        s.style.opacity = "1";
-      });
-    });
-  });
+function renderProjectsHeader() {
+  const headerRoot = document.getElementById("projects-header");
+  if (!headerRoot) return;
+  headerRoot.innerHTML = `
+    <span class="section-eyebrow">Open Science &amp; Code</span>
+    <h2 class="section-title" id="projects-heading">Projects</h2>
+    <p class="section-subtitle">
+      A selection of research, data engineering, and open-science work. Cards are generated
+      dynamically from <code>data.js</code>—adding a new project is a one-line edit.
+    </p>
+  `;
 }
 
 /* ── Dynamic project card rendering ─────────────────────── */
@@ -83,6 +69,7 @@ function renderProjects() {
   const grid = document.getElementById("projects-grid");
   if (!grid) return;
 
+  const projects = portfolioData?.projects;
   if (!Array.isArray(projects) || projects.length === 0) {
     grid.innerHTML = '<p class="empty-state">No projects yet – check back soon!</p>';
     return;
@@ -90,23 +77,17 @@ function renderProjects() {
 
   grid.innerHTML = projects
     .map((project) => {
-      // Background: real image takes priority, otherwise use the gradient.
-      // sanitizeUrl ensures only safe http/https/relative URLs reach the DOM.
       const bgStyle = project.image
         ? `background-image: url("${sanitizeUrl(project.image)}")`
-        : `background: ${project.bannerGradient || "linear-gradient(135deg, #0a2d52, #1a5a9a)"}`;
+        : `background: linear-gradient(135deg, #0a2d52, #1a5a9a)`;
 
-      const tagsHTML = Array.isArray(project.tags)
-        ? project.tags
-            .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
-            .join("")
+      const safeLink = sanitizeUrl(project.link || "");
+      const isExternalLink = /^https?:\/\//i.test(safeLink);
+      const linkAttr = safeLink
+        ? `href="${safeLink}"${isExternalLink ? ' target="_blank" rel="noopener noreferrer"' : ""}`
         : "";
 
-      const linkAttr = project.link
-        ? `href="${sanitizeUrl(project.link)}" target="_blank" rel="noopener noreferrer"`
-        : "";
-
-      const exploreLinkHTML = project.link
+      const exploreLinkHTML = safeLink
         ? `<span class="card-link" aria-hidden="true">
              ${escapeHtml(project.linkLabel || "Explore")}
              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
@@ -116,14 +97,13 @@ function renderProjects() {
         : "";
 
       // Whole card becomes an <a> when a link is set
-      const tagName = project.link ? "a" : "article";
-      const tagAttrs = project.link ? linkAttr : "";
+      const tagName = safeLink ? "a" : "article";
+      const tagAttrs = safeLink ? linkAttr : "";
 
       return `
         <${tagName} class="project-card" ${tagAttrs}>
           <div class="card-bg" style="${bgStyle}"></div>
           <div class="card-content">
-            <div class="card-tags">${tagsHTML}</div>
             <h3 class="card-title">${escapeHtml(project.title)}</h3>
             <p class="card-desc">${escapeHtml(project.description)}</p>
             ${exploreLinkHTML}
@@ -155,7 +135,82 @@ function sanitizeUrl(url) {
   return escapeHtml(trimmed);
 }
 
+/* ── Smooth-scroll for anchor nav links ─────────────────── */
+function bindSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+}
+
+/* ── Active nav highlight on scroll ─────────────────────── */
+function bindActiveNav() {
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-links a");
+
+  function highlightNav() {
+    let scrollY = window.scrollY;
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 80;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute("id");
+      const matchingLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+      if (matchingLink) {
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          navLinks.forEach((l) => l.classList.remove("active"));
+          matchingLink.classList.add("active");
+        }
+      }
+    });
+  }
+
+  window.addEventListener("scroll", highlightNav, { passive: true });
+  highlightNav();
+}
+
+/* ── Mobile hamburger menu ───────────────────────────────── */
+function bindHamburger() {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinksContainer = document.querySelector(".nav-links");
+  if (!hamburger || !navLinksContainer) return;
+
+  hamburger.addEventListener("click", () => {
+    const isOpen = navLinksContainer.classList.toggle("open");
+    hamburger.setAttribute("aria-expanded", isOpen);
+    hamburger.querySelector("span:nth-child(1)").style.transform = isOpen
+      ? "translateY(8px) rotate(45deg)"
+      : "";
+    hamburger.querySelector("span:nth-child(2)").style.opacity = isOpen ? "0" : "1";
+    hamburger.querySelector("span:nth-child(3)").style.transform = isOpen
+      ? "translateY(-8px) rotate(-45deg)"
+      : "";
+  });
+
+  navLinksContainer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinksContainer.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      hamburger.querySelectorAll("span").forEach((s) => {
+        s.style.transform = "";
+        s.style.opacity = "1";
+      });
+    });
+  });
+}
+
 /* ── Boot ────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
+  renderProfile();
+  renderNow();
+  renderProjectsHeader();
   renderProjects();
+  bindSmoothScroll();
+  bindActiveNav();
+  bindHamburger();
 });
