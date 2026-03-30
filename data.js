@@ -13,11 +13,10 @@ export const portfolioData = {
 
   // ── Edit profile content here ─────────────────────────────
   profile: {
-    // [EDIT ME] Name shown in hero heading and document metadata
     name: `Julia Lober`,
 
     // [EDIT ME] One-line subtitle shown below the name
-    title: `Cryospheric Scientist • Scientific Programmer • Open Science Advocate`,
+    title: `Graduate student at CryoGARS`,
 
     // [EDIT ME] Multi-line bio paragraph for intro/about section
     about: `[PLACEHOLDER: Write a multi-line bio here about geophysics, open data, and field science.]`
