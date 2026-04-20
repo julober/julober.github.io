@@ -33,25 +33,25 @@ export const portfolioData = {
     {
       title: `Data Management at NSIDC`,
       description: `[PLACEHOLDER: Description of AWS cloud storage and metadata for SnowEx.]`,
-      image: `images/nsidc-placeholder.jpg`,
+      image: `images/IMG_2883.jpeg`,
       link: `#`
     },
     {
       title: `Scientific Programming at TerrainWorks`,
       description: `[PLACEHOLDER: Description of open-source machine learning and R scripts.]`,
-      image: `images/terrainworks-placeholder.jpg`,
+      image: `images/IMG_2883.jpeg`,
       link: `#`
     },
     {
       title: `Phytoplankton Kaleidoscope`,
       description: `[PLACEHOLDER: Description of the art-based data visualization.]`,
-      image: `images/kaleidoscope-placeholder.jpg`,
+      image: `images/IMG_2883.jpeg`,
       link: `#`
     },
     {
       title: `Seattle Aquarium: From Outer Space to the Microscope`,
       description: `[PLACEHOLDER: Description of the public talk connecting satellite remote sensing to phytoplankton ecology.]`,
-      image: `images/aquarium-placeholder.jpg`,
+      image: `images/IMG_2883.jpeg`,
       link: `#`
     }
   ]
