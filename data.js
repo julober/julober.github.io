@@ -13,13 +13,13 @@ export const portfolioData = {
 
   // ── Edit profile content here ─────────────────────────────
   profile: {
-    name: `Julia Lober`,
+    name: ` `,
 
     // [EDIT ME] One-line subtitle shown below the name
     title: `Graduate student at CryoGARS`,
 
     // [EDIT ME] Multi-line bio paragraph for intro/about section
-    about: `[PLACEHOLDER: Write a multi-line bio here about geophysics, open data, and field science.]`
+    about: `Currently working on a master's degree at Boise State University studying interferometric coherence in seasonal snow.`
   },
 
   // ── Edit /now callout text here ───────────────────────────
